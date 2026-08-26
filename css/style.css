@@ -85,3 +85,56 @@ nav a:hover {
     padding: 40px;
     border-radius: 10px;
 }
+
+.Produtos {
+    padding: 60px 40px;
+}
+
+.produtos h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+.grade-produtos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.card-produto {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.card-produto img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card-produto h3 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.card-produto p {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.card-produto button {
+    background-color: #111;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+}
+
+.card-produto button:hover {
+    background-color: #333;
+}
