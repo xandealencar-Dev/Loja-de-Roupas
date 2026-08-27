@@ -1,16 +1,14 @@
-# 🛍️ E-commerce de Roupas
+# 🛍️ Loja de Roupas — E-commerce
 
-Projeto de uma loja virtual desenvolvido com o objetivo de praticar e aprimorar conhecimentos em desenvolvimento web.
+Aplicação web de e-commerce desenvolvida com **HTML, CSS e JavaScript**, criada com o objetivo de aplicar na prática conceitos de desenvolvimento web e evoluir progressivamente para uma aplicação completa, com banco de dados, autenticação, gerenciamento de produtos, pedidos, estoque e pagamentos.
 
-O projeto está sendo construído gradualmente, adicionando novas funcionalidades conforme o desenvolvimento avança.
+O projeto está em desenvolvimento contínuo e utiliza **Git e GitHub** para versionamento e organização das etapas.
 
-## 📌 Sobre o projeto
+---
 
-A aplicação simula uma loja virtual de roupas, permitindo que o usuário visualize produtos, adicione itens ao carrinho e avance para o processo de checkout.
+## 💻 Tecnologias
 
-O objetivo é evoluir o projeto até possuir um sistema completo de e-commerce, incluindo banco de dados, autenticação, gerenciamento de produtos, pedidos, estoque e pagamentos.
-
-## 💻 Tecnologias utilizadas
+Atualmente o projeto utiliza:
 
 - HTML5
 - CSS3
@@ -18,52 +16,129 @@ O objetivo é evoluir o projeto até possuir um sistema completo de e-commerce, 
 - Git
 - GitHub
 
-## 🛒 Funcionalidades atuais
+### Tecnologias planejadas
 
-- Visualização de produtos
-- Adicionar produtos ao carrinho
-- Remover produtos do carrinho
-- Alterar quantidade dos produtos
-- Cálculo automático do valor total
+- Supabase
+- Banco de dados
+- Sistema de autenticação
+- Integração com pagamento
+
+---
+
+## 🛒 Funcionalidades implementadas
+
+A aplicação atualmente possui:
+
+- Catálogo de produtos
 - Carrinho de compras
+- Adição de produtos ao carrinho
+- Remoção de produtos
+- Controle dos itens selecionados
+- Cálculo automático do valor total
 - Checkout
-- Formulário para realização do pedido
+- Formulário com dados do cliente
+- Criação dos dados do pedido
+- Validação básica do checkout
+- Finalização da compra
 
-## 🚧 Próximas funcionalidades
-
-O projeto continuará recebendo novas funcionalidades:
-
-- Integração com Supabase
-- Banco de dados de produtos
-- Painel administrativo
-- Cadastro de usuários
-- Login
-- Sistema de pedidos
-- Controle de estoque
-- Integração com sistema de pagamento
-- Publicação do site
+---
 
 ## 🗺️ Roadmap
 
-- [x] HTML
-- [x] CSS
-- [x] JavaScript
+O desenvolvimento está sendo realizado de forma incremental.
+
+- [x] Estrutura HTML
+- [x] Estilização com CSS
+- [x] Interações com JavaScript
 - [x] Carrinho de compras
 - [x] Checkout
-- [ ] Supabase
+- [ ] Integração com Supabase
 - [ ] Banco de produtos
 - [ ] Painel administrativo
 - [ ] Cadastro e Login
 - [ ] Sistema de pedidos
 - [ ] Controle de estoque
-- [ ] Pagamento
+- [ ] Integração de pagamento
 - [ ] Publicação do site
+
+---
+
+## 📊 Gerenciamento do projeto
+
+O desenvolvimento também é organizado utilizando **GitHub Projects**, permitindo acompanhar as funcionalidades através das etapas:
+
+`A fazer` → `Em andamento` → `Concluída`
+
+Isso permite visualizar o progresso do projeto e organizar as próximas implementações.
+
+---
+
+## 📈 Status
+
+🚧 **Em desenvolvimento**
+
+**5 de 13 etapas principais concluídas.**
+
+### Próxima etapa
+
+🔜 **Integração com Supabase**
+
+A próxima fase será responsável por iniciar a integração do front-end com os serviços de back-end e banco de dados.
+
+---
 
 ## 📂 Estrutura do projeto
 
 ```text
-projeto/
+Loja-de-Roupas/
 ├── index.html
 ├── css/
 ├── js/
 └── imagens/
+```
+
+*A estrutura poderá ser modificada conforme novas funcionalidades forem implementadas.*
+
+---
+
+## ▶️ Executando o projeto
+
+Clone o repositório:
+
+```bash
+git clone URL-DO-REPOSITORIO
+```
+
+Entre na pasta do projeto e abra o arquivo:
+
+```text
+index.html
+```
+
+Também é possível executar o projeto utilizando a extensão **Live Server** no Visual Studio Code.
+
+---
+
+## 🎯 Objetivo do projeto
+
+Este projeto foi desenvolvido como parte do meu aprendizado e evolução em **desenvolvimento de software**.
+
+Além da construção da interface, o objetivo é trabalhar diferentes etapas presentes no desenvolvimento de uma aplicação real, incluindo:
+
+- Desenvolvimento front-end
+- Manipulação do DOM
+- Lógica com JavaScript
+- Versionamento com Git
+- Organização de código
+- Banco de dados
+- Autenticação
+- Integração front-end e back-end
+- Gerenciamento de pedidos e estoque
+
+A aplicação continuará evoluindo conforme novas tecnologias e conceitos forem implementados.
+
+---
+
+## 👨‍💻 Desenvolvimento
+
+Projeto desenvolvido para estudo, prática e composição de portfólio profissional.
