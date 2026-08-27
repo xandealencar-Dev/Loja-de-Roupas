@@ -1,82 +1,293 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>Loja de roupas</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="css/style.css">
-    </head>
+    <title>Loja de Roupas</title>
 
-    <body>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
     <header>
         <h1>Minha Loja</h1>
 
         <nav>
             <a href="#">Início</a>
-            <a href="#">Produtos</a>
-            <a href="#">Carrinho</a>
+            <a href="#produtos">Produtos</a>
+
+            <a href="#" id="link-carrinho">
+                Carrinho (<span id="quantidade-carrinho">0</span>)
+            </a>
         </nav>
     </header>
 
-  <main>
+    <main>
 
-    <section class="banner">
+        <!-- Banner -->
+        <section class="banner">
+            <div class="banner-conteudo">
+                <h2>Nova Coleção</h2>
 
-        <div class="banner-conteudo">
-            <h2>Nova Coleção</h2>
-            <p>Encontre roupas para o seu estilo.</p>
-            <button>Ver produtos</button>
+                <p>Encontre roupas para o seu estilo.</p>
+
+                <button>Ver produtos</button>
+            </div>
+        </section>
+
+        <!-- Produtos -->
+        <section class="produtos" id="produtos">
+            <h2>Produtos em Destaque</h2>
+
+            <div class="grade-produtos">
+
+                <!-- Camiseta -->
+                <div class="card-produto">
+                    <img src="img/camiseta.jpg" alt="Camiseta preta">
+
+                    <h3>Camiseta Preta</h3>
+
+                    <p class="preco-produto">R$ 79,90</p>
+
+                    <label>Tamanho:</label>
+
+                    <select class="tamanho-produto">
+                        <option value="">Selecione</option>
+                        <option value="P">P</option>
+                        <option value="M">M</option>
+                        <option value="G">G</option>
+                        <option value="GG">GG</option>
+                    </select>
+
+                    <label>Quantidade:</label>
+
+                    <div class="controle-quantidade">
+                        <button class="btn-menos" type="button">-</button>
+
+                        <span class="quantidade-produto">1</span>
+
+                        <button class="btn-mais" type="button">+</button>
+                    </div>
+
+                    <button class="btn-adicionar">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+
+                <!-- Calça -->
+                <div class="card-produto">
+                    <img src="img/calca.jpg" alt="Calça jeans">
+
+                    <h3>Calça Jeans</h3>
+
+                    <p class="preco-produto">R$ 129,90</p>
+
+                    <label>Tamanho:</label>
+
+                    <select class="tamanho-produto">
+                        <option value="">Selecione</option>
+                        <option value="38">38</option>
+                        <option value="40">40</option>
+                        <option value="42">42</option>
+                        <option value="44">44</option>
+                        <option value="46">46</option>
+                    </select>
+
+                    <label>Quantidade:</label>
+
+                    <div class="controle-quantidade">
+                        <button class="btn-menos" type="button">-</button>
+
+                        <span class="quantidade-produto">1</span>
+
+                        <button class="btn-mais" type="button">+</button>
+                    </div>
+
+                    <button class="btn-adicionar">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+
+                <!-- Moletom -->
+                <div class="card-produto">
+                    <img src="img/moletom.jpg" alt="Moletom preto">
+
+                    <h3>Moletom Preto</h3>
+
+                    <p class="preco-produto">R$ 149,90</p>
+
+                    <label>Tamanho:</label>
+
+                    <select class="tamanho-produto">
+                        <option value="">Selecione</option>
+                        <option value="P">P</option>
+                        <option value="M">M</option>
+                        <option value="G">G</option>
+                        <option value="GG">GG</option>
+                    </select>
+
+                    <label>Quantidade:</label>
+
+                    <div class="controle-quantidade">
+                        <button class="btn-menos" type="button">-</button>
+
+                        <span class="quantidade-produto">1</span>
+
+                        <button class="btn-mais" type="button">+</button>
+                    </div>
+
+                    <button class="btn-adicionar">
+                        Adicionar ao Carrinho
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Fundo do carrinho -->
+    <div class="fundo-carrinho" id="fundo-carrinho"></div>
+
+    <!-- Carrinho lateral -->
+    <div class="carrinho-lateral" id="carrinho-lateral">
+
+        <div class="carrinho-topo">
+            <h2>Seu Carrinho</h2>
+
+            <button id="fechar-carrinho">X</button>
         </div>
 
-    </section>
-
-
-    <section class="produtos">
-
-        <h2>Produtos em Destaque</h2>
-
-        <div class="grade-produtos">
-
-            <div class="card-produto">
-                <img src="img/camiseta.jpg" alt="Camiseta preta">
-
-                <h3>Camiseta Preta</h3>
-
-                <p>R$ 79,90</p>
-
-                <button>Adicionar ao Carrinho</button>
-            </div>
-
-
-            <div class="card-produto">
-                <img src="img/calca.jpg" alt="Calça Jeans">
-
-                <h3>Calça Jeans</h3>
-
-                <p>R$ 129,90</p>
-
-                <button>Adicionar ao Carrinho</button>
-            </div>
-
-
-            <div class="card-produto">
-                <img src="img/moletom.jpg" alt="Moletom Masculino">
-
-                <h3>Moletom</h3>
-
-                <p>R$ 149,90</p>
-
-                <button>Adicionar ao Carrinho</button>
-            </div>
-
+        <div id="itens-carrinho">
+            <p>Seu carrinho está vazio.</p>
         </div>
 
-    </section>
+        <div class="carrinho-rodape">
+            <h3>
+                Total: R$ <span id="total-carrinho">0,00</span>
+            </h3>
 
-</main>
+            <button class="btn-finalizar">
+                Finalizar Compra
+            </button>
+        </div>
 
-    <script src="js/script.js"></script>
-    </body>
+    </div>
+
+    <!-- Fundo do checkout -->
+    <div class="checkout-fundo" id="checkout-fundo"></div>
+
+    <!-- Checkout -->
+    <div class="checkout" id="checkout">
+
+        <div class="checkout-topo">
+            <h2>Finalizar Compra</h2>
+
+            <button id="fechar-checkout">X</button>
+        </div>
+
+        <form id="form-checkout">
+
+            <h3>Dados do Cliente</h3>
+
+            <label for="nome-cliente">Nome completo</label>
+            <input
+                type="text"
+                id="nome-cliente"
+                placeholder="Digite seu nome"
+                required
+            >
+
+            <label for="email-cliente">E-mail</label>
+            <input
+                type="email"
+                id="email-cliente"
+                placeholder="Digite seu e-mail"
+                required
+            >
+
+            <label for="telefone-cliente">Telefone</label>
+            <input
+                type="tel"
+                id="telefone-cliente"
+                placeholder="(92) 99999-9999"
+                required
+            >
+
+            <h3>Endereço de Entrega</h3>
+
+            <label for="cep-cliente">CEP</label>
+            <input
+                type="text"
+                id="cep-cliente"
+                placeholder="00000-000"
+                required
+            >
+
+            <label for="rua-cliente">Rua</label>
+            <input
+                type="text"
+                id="rua-cliente"
+                placeholder="Nome da rua"
+                required
+            >
+
+            <label for="numero-cliente">Número</label>
+            <input
+                type="text"
+                id="numero-cliente"
+                placeholder="Número"
+                required
+            >
+
+            <label for="bairro-cliente">Bairro</label>
+            <input
+                type="text"
+                id="bairro-cliente"
+                placeholder="Bairro"
+                required
+            >
+
+            <label for="cidade-cliente">Cidade</label>
+            <input
+                type="text"
+                id="cidade-cliente"
+                placeholder="Cidade"
+                required
+            >
+
+            <h3>Pagamento</h3>
+
+            <label for="forma-pagamento">Forma de pagamento</label>
+
+            <select id="forma-pagamento" required>
+                <option value="">Selecione</option>
+                <option value="pix">PIX</option>
+                <option value="cartao">Cartão</option>
+            </select>
+
+            <div class="checkout-total">
+                Total do pedido:
+                R$ <span id="checkout-total">0,00</span>
+            </div>
+
+            <button
+                type="submit"
+                class="btn-confirmar-pedido"
+            >
+                Confirmar Pedido
+            </button>
+
+        </form>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="Js/script.js"></script>
+
+</body>
+
 </html>
