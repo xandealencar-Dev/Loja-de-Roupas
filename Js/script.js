@@ -1,235 +1,216 @@
-// Pega o carrinho salvo
+console.log("JAVA CARREGOU");
+
+// Supabase
+const SUPABASE_URL = "https://trfrcjlqimestmmdgonw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_0MpcGtxcajVYtCMkhLYvtg_ul3Y1qHm";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+// Carrinho salvo
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
-// Elementos dos produtos
+// Elementos
 const quantidadeCarrinho = document.querySelector("#quantidade-carrinho");
-const botoesAdicionar = document.querySelectorAll(".btn-adicionar");
-const botoesMais = document.querySelectorAll(".btn-mais");
-const botoesMenos = document.querySelectorAll(".btn-menos");
-
-// Elementos do carrinho
 const linkCarrinho = document.querySelector("#link-carrinho");
 const carrinhoLateral = document.querySelector("#carrinho-lateral");
+const fundoCarrinho = document.querySelector("#fundo-carrinho");
 const fecharCarrinho = document.querySelector("#fechar-carrinho");
 const itensCarrinho = document.querySelector("#itens-carrinho");
 const totalCarrinho = document.querySelector("#total-carrinho");
-const fundoCarrinho = document.querySelector("#fundo-carrinho");
 const botaoFinalizar = document.querySelector(".btn-finalizar");
-
-// Elementos do checkout
 const checkout = document.querySelector("#checkout");
 const checkoutFundo = document.querySelector("#checkout-fundo");
 const fecharCheckout = document.querySelector("#fechar-checkout");
 const checkoutTotal = document.querySelector("#checkout-total");
 const formCheckout = document.querySelector("#form-checkout");
+const gradeProdutos = document.querySelector("#grade-produtos");
 
-// Atualiza ao abrir o site
-atualizarCarrinho();
+// Carrega produtos
+async function carregarProdutos() {
+    const { data, error } = await supabaseClient
+        .from("produtos")
+        .select("*")
+        .eq("ativo", true)
+        .order("id");
 
-// Aumenta quantidade
-botoesMais.forEach(function(botao) {
-    botao.addEventListener("click", function() {
-        const card = botao.closest(".card-produto");
-        const quantidadeElemento = card.querySelector(".quantidade-produto");
-
-        let quantidade = Number(quantidadeElemento.innerText);
-        quantidade++;
-
-        quantidadeElemento.innerText = quantidade;
-    });
-});
-
-// Diminui quantidade
-botoesMenos.forEach(function(botao) {
-    botao.addEventListener("click", function() {
-        const card = botao.closest(".card-produto");
-        const quantidadeElemento = card.querySelector(".quantidade-produto");
-
-        let quantidade = Number(quantidadeElemento.innerText);
-
-        if (quantidade > 1) {
-            quantidade--;
-        }
-
-        quantidadeElemento.innerText = quantidade;
-    });
-});
-
-// Adiciona produto
-botoesAdicionar.forEach(function(botao) {
-    botao.addEventListener("click", function() {
-        const card = botao.closest(".card-produto");
-
-        const nome = card.querySelector("h3").innerText;
-        const precoTexto = card.querySelector(".preco-produto").innerText;
-        const tamanho = card.querySelector(".tamanho-produto").value;
-        const imagem = card.querySelector("img").src;
-        const quantidade = Number(
-            card.querySelector(".quantidade-produto").innerText
-        );
-
-        // Verifica tamanho
-        if (tamanho === "") {
-            alert("Selecione um tamanho.");
-            return;
-        }
-
-        // Converte preço
-        const preco = Number(
-            precoTexto
-                .replace("R$", "")
-                .replace(",", ".")
-                .trim()
-        );
-
-        // Procura produto igual
-        const produtoExistente = carrinho.find(function(produto) {
-            return produto.nome === nome && produto.tamanho === tamanho;
-        });
-
-        // Soma ou cria produto
-        if (produtoExistente) {
-            produtoExistente.quantidade += quantidade;
-        } else {
-            const produto = {
-                nome: nome,
-                preco: preco,
-                tamanho: tamanho,
-                imagem: imagem,
-                quantidade: quantidade
-            };
-
-            carrinho.push(produto);
-        }
-
-        salvarCarrinho();
-        atualizarCarrinho();
-
-        // Feedback visual
-        const textoOriginal = botao.innerText;
-
-        botao.innerText = "Adicionado ✓";
-        botao.disabled = true;
-
-        setTimeout(function() {
-            botao.innerText = textoOriginal;
-            botao.disabled = false;
-        }, 1200);
-    });
-});
-
-// Abre carrinho
-linkCarrinho.addEventListener("click", function(evento) {
-    evento.preventDefault();
-    abrirCarrinho();
-});
-
-// Fecha carrinho
-fecharCarrinho.addEventListener("click", function() {
-    fecharPainelCarrinho();
-});
-
-// Fecha carrinho clicando fora
-fundoCarrinho.addEventListener("click", function() {
-    fecharPainelCarrinho();
-});
-
-// Abre checkout
-botaoFinalizar.addEventListener("click", function() {
-    if (carrinho.length === 0) {
-        alert("Seu carrinho está vazio.");
+    if (error) {
+        console.log("Erro ao carregar produtos:", error);
         return;
     }
 
-    checkout.classList.add("ativo");
-    checkoutFundo.classList.add("ativo");
+    gradeProdutos.innerHTML = "";
 
-    checkoutTotal.innerText = totalCarrinho.innerText;
+    data.forEach(produto => {
+        const card = document.createElement("div");
 
-    fecharPainelCarrinho();
+        card.classList.add("card-produto");
+        card.dataset.id = produto.id;
+        card.dataset.estoque = produto.estoque;
+
+        // Tamanhos
+        let tamanhos = `
+            <option value="">Selecione</option>
+            <option value="P">P</option>
+            <option value="M">M</option>
+            <option value="G">G</option>
+            <option value="GG">GG</option>
+        `;
+
+        // Tamanhos de calça
+        if (produto.categoria === "Calças") {
+            tamanhos = `
+                <option value="">Selecione</option>
+                <option value="38">38</option>
+                <option value="40">40</option>
+                <option value="42">42</option>
+                <option value="44">44</option>
+                <option value="46">46</option>
+            `;
+        }
+
+        card.innerHTML = `
+            <img src="./${produto.imagem}" alt="${produto.nome}">
+
+            <h3>${produto.nome}</h3>
+
+            <p class="preco-produto">
+                R$ ${Number(produto.preco).toFixed(2).replace(".", ",")}
+            </p>
+
+            <p class="estoque-produto">
+                Estoque: ${produto.estoque}
+            </p>
+
+            <label>Tamanho:</label>
+
+            <select class="tamanho-produto">
+                ${tamanhos}
+            </select>
+
+            <label>Quantidade:</label>
+
+            <div class="controle-quantidade">
+                <button class="btn-menos" type="button">-</button>
+                <span class="quantidade-produto">1</span>
+                <button class="btn-mais" type="button">+</button>
+            </div>
+
+            <button class="btn-adicionar" type="button">
+                Adicionar ao Carrinho
+            </button>
+        `;
+
+        gradeProdutos.appendChild(card);
+
+        // Produto esgotado
+        if (produto.estoque === 0) {
+            const botao = card.querySelector(".btn-adicionar");
+            const quantidade = card.querySelector(".controle-quantidade");
+            const tamanho = card.querySelector(".tamanho-produto");
+
+            botao.innerText = "Esgotado";
+            botao.disabled = true;
+            quantidade.style.display = "none";
+            tamanho.disabled = true;
+        }
+    });
+}
+
+// Cliques nos produtos
+gradeProdutos.addEventListener("click", function(event) {
+    const card = event.target.closest(".card-produto");
+
+    if (!card) return;
+
+    const quantidadeElemento = card.querySelector(".quantidade-produto");
+    const estoque = Number(card.dataset.estoque);
+    let quantidade = Number(quantidadeElemento.innerText);
+
+    // Aumenta
+    if (event.target.classList.contains("btn-mais")) {
+        if (quantidade < estoque) {
+            quantidade++;
+            quantidadeElemento.innerText = quantidade;
+        } else {
+            alert("Quantidade máxima disponível em estoque.");
+        }
+    }
+
+    // Diminui
+    if (event.target.classList.contains("btn-menos")) {
+        if (quantidade > 1) {
+            quantidade--;
+            quantidadeElemento.innerText = quantidade;
+        }
+    }
+
+    // Adiciona
+    if (event.target.classList.contains("btn-adicionar")) {
+        adicionarAoCarrinho(card, event.target);
+    }
 });
 
-// Fecha checkout
-fecharCheckout.addEventListener("click", function() {
-    fecharCheckoutPagina();
-});
+// Adiciona ao carrinho
+function adicionarAoCarrinho(card, botao) {
+    const id = Number(card.dataset.id);
+    const estoque = Number(card.dataset.estoque);
+    const nome = card.querySelector("h3").innerText;
+    const imagem = card.querySelector("img").src;
+    const tamanho = card.querySelector(".tamanho-produto").value;
+    const quantidade = Number(
+        card.querySelector(".quantidade-produto").innerText
+    );
 
-// Fecha checkout clicando fora
-checkoutFundo.addEventListener("click", function() {
-    fecharCheckoutPagina();
-});
+    const precoTexto = card
+        .querySelector(".preco-produto")
+        .innerText
+        .replace("R$", "")
+        .replace(".", "")
+        .replace(",", ".")
+        .trim();
 
-// Confirma pedido
-formCheckout.addEventListener("submit", function(evento) {
-    evento.preventDefault();
+    const preco = Number(precoTexto);
 
-    const nomeCliente = document.querySelector("#nome-cliente").value;
-    const emailCliente = document.querySelector("#email-cliente").value;
-    const telefoneCliente = document.querySelector("#telefone-cliente").value;
+    if (tamanho === "") {
+        alert("Selecione um tamanho.");
+        return;
+    }
 
-    const cepCliente = document.querySelector("#cep-cliente").value;
-    const ruaCliente = document.querySelector("#rua-cliente").value;
-    const numeroCliente = document.querySelector("#numero-cliente").value;
-    const bairroCliente = document.querySelector("#bairro-cliente").value;
-    const cidadeCliente = document.querySelector("#cidade-cliente").value;
+    const produtoExistente = carrinho.find(
+        item => item.id === id && item.tamanho === tamanho
+    );
 
-    const formaPagamento = document.querySelector("#forma-pagamento").value;
+    if (produtoExistente) {
+        if (produtoExistente.quantidade + quantidade > estoque) {
+            alert("Quantidade maior que o estoque disponível.");
+            return;
+        }
 
-    // Calcula total do pedido
-    const totalPedido = carrinho.reduce(function(total, produto) {
-        return total + (produto.preco * produto.quantidade);
-    }, 0);
-
-    // Cria o pedido
-    const pedido = {
-        cliente: {
-            nome: nomeCliente,
-            email: emailCliente,
-            telefone: telefoneCliente
-        },
-        endereco: {
-            cep: cepCliente,
-            rua: ruaCliente,
-            numero: numeroCliente,
-            bairro: bairroCliente,
-            cidade: cidadeCliente
-        },
-        produtos: carrinho,
-        pagamento: formaPagamento,
-        total: totalPedido,
-        data: new Date().toLocaleString("pt-BR")
-    };
-
-    console.log("Pedido criado:");
-    console.log(pedido);
-
-    alert("Pedido criado com sucesso!");
-
-    // Limpa checkout e carrinho
-    formCheckout.reset();
-    carrinho = [];
+        produtoExistente.quantidade += quantidade;
+    } else {
+        carrinho.push({
+            id,
+            nome,
+            preco,
+            imagem,
+            tamanho,
+            quantidade,
+            estoque
+        });
+    }
 
     salvarCarrinho();
     atualizarCarrinho();
-    fecharCheckoutPagina();
-});
 
-// Abre painel do carrinho
-function abrirCarrinho() {
-    carrinhoLateral.classList.add("aberto");
-    fundoCarrinho.classList.add("ativo");
-}
+    // Feedback
+    botao.innerText = "Adicionado ✓";
 
-// Fecha painel do carrinho
-function fecharPainelCarrinho() {
-    carrinhoLateral.classList.remove("aberto");
-    fundoCarrinho.classList.remove("ativo");
-}
-
-// Fecha checkout
-function fecharCheckoutPagina() {
-    checkout.classList.remove("ativo");
-    checkoutFundo.classList.remove("ativo");
+    setTimeout(function() {
+        botao.innerText = "Adicionar ao Carrinho";
+    }, 1000);
 }
 
 // Salva carrinho
@@ -239,15 +220,13 @@ function salvarCarrinho() {
 
 // Atualiza carrinho
 function atualizarCarrinho() {
-    let quantidadeTotal = 0;
-
-    carrinho.forEach(function(produto) {
-        quantidadeTotal += produto.quantidade || 1;
-    });
+    const quantidadeTotal = carrinho.reduce(
+        (total, item) => total + item.quantidade,
+        0
+    );
 
     quantidadeCarrinho.innerText = quantidadeTotal;
 
-    // Carrinho vazio
     if (carrinho.length === 0) {
         itensCarrinho.innerHTML = "<p>Seu carrinho está vazio.</p>";
         totalCarrinho.innerText = "0,00";
@@ -258,122 +237,176 @@ function atualizarCarrinho() {
 
     let total = 0;
 
-    // Mostra produtos
-    carrinho.forEach(function(produto, indice) {
-        if (!produto.quantidade) {
-            produto.quantidade = 1;
-        }
+    carrinho.forEach((item, index) => {
+        total += item.preco * item.quantidade;
 
-        const subtotal = produto.preco * produto.quantidade;
-        total += subtotal;
+        const div = document.createElement("div");
 
-        const item = document.createElement("div");
-        item.classList.add("item-carrinho");
+        div.classList.add("item-carrinho");
 
-        item.innerHTML = `
-            <div class="item-carrinho-conteudo">
-                <img
-                    src="${produto.imagem}"
-                    alt="${produto.nome}"
-                    class="item-carrinho-img"
+        div.innerHTML = `
+            <img src="${item.imagem}" alt="${item.nome}">
+
+            <div>
+                <h4>${item.nome}</h4>
+                <p>Tamanho: ${item.tamanho}</p>
+                <p>Quantidade: ${item.quantidade}</p>
+
+                <p>
+                    R$ ${(item.preco * item.quantidade)
+                        .toFixed(2)
+                        .replace(".", ",")}
+                </p>
+
+                <button
+                    class="remover-item"
+                    data-index="${index}"
+                    type="button"
                 >
-
-                <div class="item-carrinho-info">
-                    <h4>${produto.nome}</h4>
-
-                    <p>Tamanho: ${produto.tamanho}</p>
-
-                    <p>
-                        R$ ${produto.preco.toFixed(2).replace(".", ",")} cada
-                    </p>
-
-                    <div class="controle-quantidade-carrinho">
-                        <button
-                            class="btn-menos-carrinho"
-                            data-indice="${indice}"
-                        >
-                            -
-                        </button>
-
-                        <span>${produto.quantidade}</span>
-
-                        <button
-                            class="btn-mais-carrinho"
-                            data-indice="${indice}"
-                        >
-                            +
-                        </button>
-                    </div>
-
-                    <p class="subtotal-item">
-                        Subtotal: R$ ${subtotal.toFixed(2).replace(".", ",")}
-                    </p>
-
-                    <button
-                        class="btn-remover"
-                        data-indice="${indice}"
-                    >
-                        Remover
-                    </button>
-                </div>
+                    Remover
+                </button>
             </div>
         `;
 
-        itensCarrinho.appendChild(item);
+        itensCarrinho.appendChild(div);
     });
 
-    // Atualiza total
-    totalCarrinho.innerText = total.toFixed(2).replace(".", ",");
-
-    configurarBotoesCarrinho();
+    totalCarrinho.innerText = total
+        .toFixed(2)
+        .replace(".", ",");
 }
 
-// Botões do carrinho
-function configurarBotoesCarrinho() {
-    const botoesMaisCarrinho =
-        document.querySelectorAll(".btn-mais-carrinho");
+// Remove item
+itensCarrinho.addEventListener("click", function(event) {
+    if (event.target.classList.contains("remover-item")) {
+        const index = Number(event.target.dataset.index);
 
-    const botoesMenosCarrinho =
-        document.querySelectorAll(".btn-menos-carrinho");
+        carrinho.splice(index, 1);
 
-    const botoesRemover =
-        document.querySelectorAll(".btn-remover");
+        salvarCarrinho();
+        atualizarCarrinho();
+    }
+});
 
-    // Aumenta no carrinho
-    botoesMaisCarrinho.forEach(function(botao) {
-        botao.addEventListener("click", function() {
-            const indice = Number(botao.dataset.indice);
+// Abre carrinho
+linkCarrinho.addEventListener("click", function(event) {
+    event.preventDefault();
 
-            carrinho[indice].quantidade++;
+    carrinhoLateral.classList.add("ativo");
+    fundoCarrinho.classList.add("ativo");
+});
 
-            salvarCarrinho();
-            atualizarCarrinho();
-        });
-    });
-
-    // Diminui no carrinho
-    botoesMenosCarrinho.forEach(function(botao) {
-        botao.addEventListener("click", function() {
-            const indice = Number(botao.dataset.indice);
-
-            if (carrinho[indice].quantidade > 1) {
-                carrinho[indice].quantidade--;
-            }
-
-            salvarCarrinho();
-            atualizarCarrinho();
-        });
-    });
-
-    // Remove do carrinho
-    botoesRemover.forEach(function(botao) {
-        botao.addEventListener("click", function() {
-            const indice = Number(botao.dataset.indice);
-
-            carrinho.splice(indice, 1);
-
-            salvarCarrinho();
-            atualizarCarrinho();
-        });
-    });
+// Fecha carrinho
+function fecharPainelCarrinho() {
+    carrinhoLateral.classList.remove("ativo");
+    fundoCarrinho.classList.remove("ativo");
 }
+
+fecharCarrinho.addEventListener("click", fecharPainelCarrinho);
+fundoCarrinho.addEventListener("click", fecharPainelCarrinho);
+
+// Abre checkout
+botaoFinalizar.addEventListener("click", function() {
+    if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio.");
+        return;
+    }
+
+    checkout.classList.add("ativo");
+    checkoutFundo.classList.add("ativo");
+    checkoutTotal.innerText = totalCarrinho.innerText;
+
+    fecharPainelCarrinho();
+});
+
+// Fecha checkout
+function fecharPainelCheckout() {
+    checkout.classList.remove("ativo");
+    checkoutFundo.classList.remove("ativo");
+}
+
+fecharCheckout.addEventListener("click", fecharPainelCheckout);
+checkoutFundo.addEventListener("click", fecharPainelCheckout);
+
+// Confirma pedido
+formCheckout.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const nome = document.querySelector("#nome-cliente").value;
+    const email = document.querySelector("#email-cliente").value;
+    const telefone = document.querySelector("#telefone-cliente").value;
+    const cep = document.querySelector("#cep-cliente").value;
+    const rua = document.querySelector("#rua-cliente").value;
+    const numero = document.querySelector("#numero-cliente").value;
+    const bairro = document.querySelector("#bairro-cliente").value;
+    const cidade = document.querySelector("#cidade-cliente").value;
+    const pagamento = document.querySelector("#forma-pagamento").value;
+
+    const total = carrinho.reduce(
+        (soma, item) => soma + item.preco * item.quantidade,
+        0
+    );
+
+    // Cria pedido
+    const { data: pedido, error: erroPedido } = await supabaseClient
+        .from("pedidos")
+        .insert({
+            nome_cliente: nome,
+            email: email,
+            telefone: telefone,
+            cep: cep,
+            rua: rua,
+            numero: numero,
+            bairro: bairro,
+            cidade: cidade,
+            pagamento: pagamento,
+            total: total
+        })
+        .select("id")
+        .single();
+
+    if (erroPedido) {
+        console.log("Erro ao criar pedido:", erroPedido);
+        alert("Erro ao finalizar pedido.");
+        return;
+    }
+
+    // Itens do pedido
+    const itens = carrinho.map(item => ({
+        pedido_id: pedido.id,
+        produto_id: item.id,
+        nome_produto: item.nome,
+        tamanho: item.tamanho,
+        quantidade: item.quantidade,
+        preco_unitario: item.preco,
+        subtotal: item.preco * item.quantidade
+    }));
+
+    // Salva itens
+    const { error: erroItens } = await supabaseClient
+        .from("itens_pedidos")
+        .insert(itens);
+
+    if (erroItens) {
+        console.log("Erro ao salvar itens:", erroItens);
+        alert("Pedido criado, mas houve erro ao salvar os produtos.");
+        return;
+    }
+
+    console.log("PEDIDO CRIADO:", pedido.id);
+
+    alert("Pedido confirmado com sucesso!");
+
+    // Limpa carrinho
+    carrinho = [];
+
+    salvarCarrinho();
+    atualizarCarrinho();
+
+    formCheckout.reset();
+    fecharPainelCheckout();
+});
+
+// Inicia
+carregarProdutos();
+atualizarCarrinho();

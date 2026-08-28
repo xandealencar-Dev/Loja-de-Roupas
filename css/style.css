@@ -15,7 +15,6 @@ header {
     background-color: #111;
     color: white;
     padding: 20px 40px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,37 +32,28 @@ nav a {
 }
 
 nav a:hover {
-    color: #cccccc;
+    color: #ccc;
 }
 
 /* Banner */
 .banner {
     height: 500px;
-
     background:
-        linear-gradient(
-            rgba(0, 0, 0, 0.45),
-            rgba(0, 0, 0, 0.45)
-        ),
+        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
         url("../img/banner.jpg");
-
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     text-align: center;
     color: white;
 }
 
 .banner-conteudo {
-    background-color: rgba(0, 0, 0, 0.55);
-
+    background-color: rgba(0,0,0,0.55);
     padding: 40px;
-
     border-radius: 10px;
 }
 
@@ -80,14 +70,10 @@ nav a:hover {
 .banner-conteudo button {
     background-color: #111;
     color: white;
-
     border: none;
     border-radius: 5px;
-
     padding: 14px 30px;
-
     font-size: 16px;
-
     cursor: pointer;
 }
 
@@ -102,36 +88,27 @@ nav a:hover {
 
 .produtos h2 {
     text-align: center;
-
     font-size: 32px;
-
     margin-bottom: 40px;
 }
 
 .grade-produtos {
     display: grid;
-
     grid-template-columns: repeat(3, 1fr);
-
     gap: 30px;
 }
 
 .card-produto {
     background-color: white;
-
     padding: 20px;
-
     border-radius: 10px;
-
     text-align: center;
 }
 
 .card-produto img {
     width: 100%;
     height: 300px;
-
     object-fit: cover;
-
     border-radius: 8px;
 }
 
@@ -142,36 +119,27 @@ nav a:hover {
 
 .preco-produto {
     font-size: 20px;
-
     font-weight: bold;
-
     margin-bottom: 15px;
 }
 
 /* Tamanho */
 .tamanho-produto {
     width: 100%;
-
     padding: 10px;
-
     margin-top: 8px;
     margin-bottom: 15px;
-
     border: 1px solid #ccc;
     border-radius: 5px;
-
     font-size: 15px;
 }
 
 /* Quantidade */
 .controle-quantidade {
     display: flex;
-
     justify-content: center;
     align-items: center;
-
     gap: 15px;
-
     margin-top: 10px;
     margin-bottom: 15px;
 }
@@ -180,15 +148,11 @@ nav a:hover {
 .btn-mais {
     width: 35px;
     height: 35px;
-
     border: none;
     border-radius: 5px;
-
     background-color: #111;
     color: white;
-
     font-size: 20px;
-
     cursor: pointer;
 }
 
@@ -199,9 +163,7 @@ nav a:hover {
 
 .quantidade-produto {
     min-width: 25px;
-
     text-align: center;
-
     font-size: 18px;
     font-weight: bold;
 }
@@ -209,17 +171,12 @@ nav a:hover {
 /* Botão adicionar */
 .btn-adicionar {
     width: 100%;
-
     background-color: #111;
     color: white;
-
     border: none;
     border-radius: 5px;
-
     padding: 12px 20px;
-
     font-size: 16px;
-
     cursor: pointer;
 }
 
@@ -228,25 +185,19 @@ nav a:hover {
 }
 
 .btn-adicionar:disabled {
-    background-color: #333;
-
+    background-color: #777;
     cursor: default;
 }
 
 /* Fundo do carrinho */
 .fundo-carrinho {
     position: fixed;
-
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100%;
-
-    background-color: rgba(0, 0, 0, 0.4);
-
+    background-color: rgba(0,0,0,0.4);
     display: none;
-
     z-index: 900;
 }
 
@@ -254,41 +205,33 @@ nav a:hover {
     display: block;
 }
 
-/* Carrinho */
+/* Carrinho lateral */
 .carrinho-lateral {
     position: fixed;
-
     top: 0;
     right: -420px;
-
     width: 400px;
+    max-width: 100%;
     height: 100vh;
-
     background-color: white;
-
     padding: 25px;
-
-    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.2);
-
-    transition: 0.3s;
-
+    box-shadow: -4px 0 15px rgba(0,0,0,0.2);
+    transition: right 0.3s;
     z-index: 1000;
-
     display: flex;
     flex-direction: column;
 }
 
-.carrinho-lateral.aberto {
+/* Abre o carrinho */
+.carrinho-lateral.ativo {
     right: 0;
 }
 
 /* Topo do carrinho */
 .carrinho-topo {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
-
     margin-bottom: 30px;
 }
 
@@ -298,102 +241,60 @@ nav a:hover {
 
 .carrinho-topo button {
     background: none;
-
     border: none;
-
     font-size: 24px;
-
     cursor: pointer;
 }
 
 /* Itens do carrinho */
 #itens-carrinho {
     flex: 1;
-
     overflow-y: auto;
 }
 
 .item-carrinho {
+    display: flex;
+    gap: 15px;
     border-bottom: 1px solid #ddd;
-
     padding: 15px 0;
 }
 
-.item-carrinho-conteudo {
-    display: flex;
-
-    gap: 15px;
-
-    align-items: flex-start;
-}
-
-.item-carrinho-img {
+.item-carrinho img {
     width: 80px;
     height: 100px;
-
     object-fit: cover;
-
     border-radius: 6px;
 }
 
-.item-carrinho-info {
+.item-carrinho div {
     flex: 1;
 }
 
-.item-carrinho-info h4 {
+.item-carrinho h4 {
     margin-bottom: 7px;
 }
 
-.item-carrinho-info p {
+.item-carrinho p {
     margin-bottom: 7px;
 }
 
-.subtotal-item {
-    font-weight: bold;
-}
-
-/* Quantidade no carrinho */
-.controle-quantidade-carrinho {
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    margin: 10px 0;
-}
-
-.btn-menos-carrinho,
-.btn-mais-carrinho {
-    width: 30px;
-    height: 30px;
-
-    background-color: #111;
-    color: white;
-
-    border: none;
-    border-radius: 4px;
-
-    cursor: pointer;
-}
-
-/* Remover */
-.btn-remover {
+/* Remover item */
+.remover-item {
     background-color: #d9534f;
     color: white;
-
     border: none;
     border-radius: 4px;
-
     padding: 7px 12px;
-
     cursor: pointer;
+}
+
+.remover-item:hover {
+    opacity: 0.9;
 }
 
 /* Rodapé do carrinho */
 .carrinho-rodape {
     border-top: 1px solid #ddd;
-
     padding-top: 20px;
 }
 
@@ -403,17 +304,12 @@ nav a:hover {
 
 .btn-finalizar {
     width: 100%;
-
     background-color: #111;
     color: white;
-
     border: none;
     border-radius: 5px;
-
     padding: 14px;
-
     font-size: 16px;
-
     cursor: pointer;
 }
 
@@ -424,17 +320,12 @@ nav a:hover {
 /* Fundo do checkout */
 .checkout-fundo {
     position: fixed;
-
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100%;
-
-    background-color: rgba(0, 0, 0, 0.5);
-
+    background-color: rgba(0,0,0,0.5);
     display: none;
-
     z-index: 1100;
 }
 
@@ -445,25 +336,17 @@ nav a:hover {
 /* Checkout */
 .checkout {
     position: fixed;
-
     top: 50%;
     left: 50%;
-
     transform: translate(-50%, -50%);
-
     width: 500px;
+    max-width: 90%;
     max-height: 90vh;
-
     overflow-y: auto;
-
     background-color: white;
-
     padding: 30px;
-
     border-radius: 10px;
-
     display: none;
-
     z-index: 1200;
 }
 
@@ -474,29 +357,22 @@ nav a:hover {
 /* Topo do checkout */
 .checkout-topo {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
-
     margin-bottom: 25px;
 }
 
 .checkout-topo button {
     background: none;
-
     border: none;
-
     font-size: 24px;
-
     cursor: pointer;
 }
 
 /* Formulário */
 .checkout form {
     display: flex;
-
     flex-direction: column;
-
     gap: 10px;
 }
 
@@ -508,19 +384,15 @@ nav a:hover {
 .checkout input,
 .checkout select {
     width: 100%;
-
     padding: 12px;
-
     border: 1px solid #ccc;
     border-radius: 5px;
-
     font-size: 15px;
 }
 
 /* Total do checkout */
 .checkout-total {
     margin-top: 20px;
-
     font-size: 20px;
     font-weight: bold;
 }
@@ -528,20 +400,56 @@ nav a:hover {
 /* Confirmar pedido */
 .btn-confirmar-pedido {
     margin-top: 15px;
-
     padding: 14px;
-
     background-color: #111;
     color: white;
-
     border: none;
     border-radius: 5px;
-
     font-size: 16px;
-
     cursor: pointer;
 }
 
 .btn-confirmar-pedido:hover {
     background-color: #333;
+}
+
+/* Celular */
+@media (max-width: 768px) {
+    header {
+        padding: 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .banner {
+        height: 400px;
+        background-size: cover;
+    }
+
+    .banner-conteudo h2 {
+        font-size: 36px;
+    }
+
+    .produtos {
+        padding: 40px 20px;
+    }
+
+    .grade-produtos {
+        grid-template-columns: 1fr;
+    }
+
+    .carrinho-lateral {
+        width: 100%;
+        right: -100%;
+    }
+
+    .carrinho-lateral.ativo {
+        right: 0;
+    }
 }
