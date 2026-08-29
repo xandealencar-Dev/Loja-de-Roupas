@@ -106,7 +106,7 @@ Loja-de-Roupas/
 Clone o repositório:
 
 ```bash
-git clone URL-DO-REPOSITORIO
+git clone (https://github.com/xandealencar-Dev/Loja-de-Roupas.git)
 ```
 
 Entre na pasta do projeto e abra o arquivo:
